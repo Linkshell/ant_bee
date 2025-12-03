@@ -3,7 +3,12 @@
 # time: 2025/12/2 18:35
 import os
 from torch.utils.data import Dataset
-
+import torchvision.transforms as transforms
+from PIL import Image
+m_transform = transforms.Compose([
+    transforms.Resize((1024, 1024)),
+    transforms.ToTensor()
+])
 class dateset(Dataset):
     def __init__(self, root_dir,label):
         self.root_dir = root_dir
@@ -12,6 +17,11 @@ class dateset(Dataset):
         self.all_imgs = os.listdir(self.path)
     def __getitem__(self, idx):
         img = os.path.join(self.path, self.all_imgs[idx])
+        img = Image.open(img)
+        img = m_transform(img)
+        aa = transforms.ToPILImage()
+        img = aa(img)
+        img.show()
         label = self.label
         return img,label
     def __len__(self):
