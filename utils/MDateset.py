@@ -5,8 +5,9 @@ import os
 from torch.utils.data import Dataset
 import torchvision.transforms as transforms
 from PIL import Image
+import torch
 m_transform = transforms.Compose([
-    transforms.Resize((1024, 1024)),
+    transforms.Resize((224, 224)),
     transforms.ToTensor()
 ])
 class dateset(Dataset):
@@ -19,11 +20,8 @@ class dateset(Dataset):
         img = os.path.join(self.path, self.all_imgs[idx])
         img = Image.open(img)
         img = m_transform(img)
-        aa = transforms.ToPILImage()
-        img = aa(img)
-        img.show()
-        label = self.label
-        return img,label
+        lable = torch.tensor(1) if self.label == 'ants' else torch.tensor(0)
+        return img,lable
     def __len__(self):
         size = len(self.all_imgs)
         return size
