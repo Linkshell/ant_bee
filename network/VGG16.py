@@ -44,7 +44,7 @@ class VGG16(nn.Module):
             nn.Linear(4096, 4096),
             nn.Dropout(0.5),
             nn.ReLU(),
-            nn.Linear(4096, 1000)
+            nn.Linear(4096, 2)
         )
     def forward(self,x):
         x = self.model1(x)
